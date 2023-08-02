@@ -19,8 +19,34 @@ body{
   border-radius: 15px;
 }
 
-/* @media (max-width:480px){
-  .main{
-    text-align: center;
-  }
+ input[type="radio"]{
+  position: absolute;
+  opacity: 0;
+  z-index: 1000;
+}
+label{
+  display: block;
+}
+/* .advance:hover{
+  background:hsl(217, 100%, 97%);
+  border: 1px solid hsl(243, 100%, 62%);
 } */
+.sub input[type="radio"]:checked ~ label{
+border: 1px solid hsl(243, 100%, 62%);
+background: hsl(217, 100%, 97%);
+display: block;
+z-index: 1;
+}
+
+/* .sub input[type="radio"]:checked ~ label:hover{
+  border: 1px solid hsl(243, 100%, 62%);
+  background: hsl(217, 100%, 97%);
+  display: block;
+} */
+/* .duration > div{
+  padding: 1rem;
+  background: red;
+} */
+input[type="radio"]:checked ~ .main-circle{
+background: white;
+}
