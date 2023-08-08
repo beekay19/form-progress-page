@@ -50,3 +50,18 @@ z-index: 1;
 input[type="radio"]:checked ~ .main-circle{
 background: white;
 }
+/* .add-ons{
+  border-color: red;
+} */
+
+@media(max-width:659px){
+ .main{
+  background: url('/src/assets/bg-sidebar-mobile.svg') no-repeat center center;
+  background-size: 730px;
+ }
+}
+@media(max-width:450px){
+  .main{
+    background: url('/src/assets/bg-sidebar-mobile.svg')no-repeat top right left/contain;
+  }
+}

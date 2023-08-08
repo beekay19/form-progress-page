@@ -1,19 +1,52 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import Footer from "../components/shared/Footer";
 import arcade from "../assets/icon-arcade.svg";
 import pro from "../assets/icon-pro.svg";
 import advance from "../assets/icon-advanced.svg";
-function Plans() {
-  const [selected, setSelected] = useState("month");
+import {useNavigate} from "react-router-dom"
+function Plans({handlePick,handleSubcription,selected,newPlan}) {
+  const navigate = useNavigate()
+  const [isSelected, setSelected] = useState("month");
   const [plan, setPlan] = useState("arcade");
   const [price, setPrice] = useState(9);
-  const handleChange = (e) => {
-    setSelected(e.target.value);
-  };
+  const [message ,setMessage] = useState('')
+  
+  useEffect(()=>{
+    setSelected(selected)
+    setPlan(newPlan)
+  },[newPlan, selected])
+
   const handlePlan = (e) => {
-    console.log(e.target.value);
+    setPrice(+e.target.value);
+    setPlan(e.target.id)
+    handleSubcription(e.target.id,+e.target.value)
+    const item = {
+      price:+e.target.value,
+      plan:e.target.id
+    }
+    console.log(item)
   };
+  const handleChange = (e) => {
+    if (e.target.value === "year") {
+      setPrice((currentPrice) => currentPrice * 10);
+      handleSubcription(plan, (currentPrice) => currentPrice * 10)
+      setMessage('2 months free')
+    }
+    else {
+      setPrice((currentPrice) => currentPrice / 10);
+      handleSubcription(plan,(currentPrice) => currentPrice / 10)
+      setMessage(null)
+
+    }
+    setSelected(e.target.value);
+    handlePick(e.target.value);
+}
+
+  const handleClick = () =>{
+    navigate('/add-ons')
+  }
   return (
-    <div className="w-[80%] mx-auto pt-8">
+    <div className="w-[80%] mx-auto pt-8 ">
       <h2 className="text-3xl font-bold pb-2 text-marineBlue">
         Select your plan
       </h2>
@@ -25,7 +58,10 @@ function Plans() {
       mb-8"
       >
         <div className="arcade relative rounded-md border hover:border-purplishBlue">
-          <input type="radio" name="subcription" id="arcade" defaultChecked />
+          <input type="radio" name="subcription" id="arcade" 
+          onChange={handlePlan}
+          value={isSelected === "month" ? 9 : 90}
+          checked={plan === 'arcade'} />
           <label
             htmlFor="arcade"
             className="border block  rounded-md py-4 pl-2"
@@ -35,12 +71,16 @@ function Plans() {
             </div>
             <h3 className="font-semibold text-purplishBlue ">Arcade</h3>
             <p className="text-coolGray text-sm font-normal">
-              {selected === "month" ? "$9/mo" : "$90/yr"}
+              {isSelected === "month" ? "$9/mo" : "$90/yr"}
             </p>
+            {message&& <p className="text-marineBlue text-[0.83rem] font-medium pt-1">{message}</p>}
           </label>
         </div>
         <div className="advance relative rounded-md border hover:border-purplishBlue">
-          <input type="radio" name="subcription" id="advance" />
+          <input type="radio" name="subcription" id="advance"
+          value={isSelected === "month" ? 12 : 120}
+          onChange={handlePlan} 
+          checked={plan === 'advance'}/>
           <label
             htmlFor="advance"
             className="border block  rounded-md py-4 pl-2"
@@ -50,8 +90,9 @@ function Plans() {
             </div>
             <h3 className="font-semibold text-purplishBlue ">Advance</h3>
             <p className="text-coolGray text-sm font-normal">
-              {selected === "month" ? "$12/mo" : "$120/yr"}
+              {isSelected === "month" ? "$12/mo" : "$120/yr"}
             </p>
+            {message&& <p className="text-marineBlue text-[0.83rem] font-medium pt-1">{message}</p>}
           </label>
         </div>
         <div className="pro relative rounded-md border hover:border-purplishBlue">
@@ -60,7 +101,8 @@ function Plans() {
             name="subcription"
             id="pro"
             onChange={handlePlan}
-            value={selected === "month" ? 12 : 120}
+            value={isSelected === "month" ? 15 : 150}
+            checked={plan === 'pro'}
           />
           <label htmlFor="pro" className="border block rounded-md py-4 pl-2">
             <div className=" pb-8">
@@ -68,12 +110,13 @@ function Plans() {
             </div>
             <h3 className="font-semibold text-purplishBlue ">Pro</h3>
             <p className="text-coolGray text-sm font-normal">
-              {selected === "month" ? "$15/mo" : "$150/yr"}
+              {isSelected === "month" ? "$15/mo" : "$150/yr"}
             </p>
+            {message&& <p className="text-marineBlue text-[0.83rem] font-medium pt-1 transition-all">{message}</p>}
           </label>
         </div>
       </section>
-      <div className="duration bg-mongolia p-2 flex justify-center items-center rounded-md">
+      <div className="duration bg-mongolia p-2 flex justify-center items-center rounded-md mb-16">
         <label htmlFor="month" className="mr-4">
           Monthly
         </label>
@@ -85,7 +128,7 @@ function Plans() {
               id="month"
               value="month"
               onChange={handleChange}
-              checked={selected === "month"}
+              checked={isSelected === "month"}
             />
             <div className="main-circle p-2 top-0 rounded-full"></div>
           </div>
@@ -96,7 +139,7 @@ function Plans() {
               id="year"
               value="year"
               onChange={handleChange}
-              checked={selected === "year"}
+              checked={isSelected === "year"}
             />
             <div className="main-circle p-2 top-0 rounded-full"></div>
           </div>
@@ -105,6 +148,7 @@ function Plans() {
           Yearly
         </label>
       </div>
+      <Footer setStyle="bg-marineBlue  hover:opacity-80" children="Next Step" handleClick={handleClick} setDisabled={false} handleBack={() => navigate('/')}/>
     </div>
   );
 }
