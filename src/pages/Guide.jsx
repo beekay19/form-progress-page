@@ -12,7 +12,7 @@ function Guide() {
   return (
     <div className='main flex justify-center pl-6 pt-6 select-none  whitespace-pre space-x-8 md:space-x-0 md:justify-start md:flex-col'>
         <div className="step-1 flex items-center space-x-4 mb-6">
-            <p className={` rounded-full border border-solid border-l-pastelBlue h-10 w-10 grid text-white place-content-center select-none ${pathMatchRouth('/info')?"bg-pastelBlue text-black":"bg-transparent text-white"}`} >1</p>
+            <p className={` rounded-full border border-solid border-l-pastelBlue h-10 w-10 grid text-white place-content-center select-none ${pathMatchRouth('/')?"bg-pastelBlue text-black":"bg-transparent text-white"}`} >1</p>
             <div className='hidden md:block'>
                 <p className='text-lightGray text-sm'>STEP 1</p>
                 <p className='font-semibold text-sm text-white tracking-wider'>YOUR INFO</p>
