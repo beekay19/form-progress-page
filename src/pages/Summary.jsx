@@ -2,8 +2,12 @@ import Footer from "../components/shared/Footer"
 import { useNavigate } from "react-router-dom"
 import AddOnsItems from "../components/addOnsItems"
 // import AddOns from "./AddOns"
+import StatsRating from "../components/StatsRating";
+import AppContext from "../context/Context";
+import { useContext } from "react";
 
-function Summary({plan,selected,price,addOns}) {
+function Summary() {
+  const {plan,selected,price,addOns} = useContext(AppContext)
  const navigate = useNavigate()
   return (
     <div className="w-[80%] mx-auto pt-6 relative pb-6">
@@ -26,11 +30,10 @@ function Summary({plan,selected,price,addOns}) {
          return <AddOnsItems key={index} item={item} selected={selected}/>
         })}
       </section>
-      <div className="p-4 flex justify-between">
-        <p className="text-coolGray">Total (per year)</p>
-        <p className="text-purplishBlue font-bold text-2xl">$120/yr</p>
-      </div>
-      <Footer children="Confirm" setStyle="bg-purplishBlue hover:opacity-80" handleBack={()=>navigate('/add-ons')} />
+      
+      <StatsRating price={price} addOns={addOns} selected={selected}/>
+      <Footer children="Confirm" setStyle="bg-purplishBlue hover:opacity-80" handleBack={()=>navigate('/add-ons')} 
+      handleClick={()=> navigate('/summary/thanks')}/>
     </div>
   )
 }

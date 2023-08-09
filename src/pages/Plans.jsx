@@ -1,10 +1,12 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect,useContext } from "react";
 import Footer from "../components/shared/Footer";
 import arcade from "../assets/icon-arcade.svg";
 import pro from "../assets/icon-pro.svg";
 import advance from "../assets/icon-advanced.svg";
 import {useNavigate} from "react-router-dom"
-function Plans({handlePick,handleSubcription,selected,newPlan}) {
+import AppContext from "../context/Context";
+function Plans() {
+  const {handlePick,handleSubcription,selected,newPlan} = useContext(AppContext)
   const navigate = useNavigate()
   const [isSelected, setSelected] = useState("month");
   const [plan, setPlan] = useState("arcade");
@@ -20,11 +22,6 @@ function Plans({handlePick,handleSubcription,selected,newPlan}) {
     setPrice(+e.target.value);
     setPlan(e.target.id)
     handleSubcription(e.target.id,+e.target.value)
-    const item = {
-      price:+e.target.value,
-      plan:e.target.id
-    }
-    console.log(item)
   };
   const handleChange = (e) => {
     if (e.target.value === "year") {

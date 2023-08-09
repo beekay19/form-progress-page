@@ -1,7 +1,9 @@
 import Footer from "../components/shared/Footer";
 import { useNavigate } from "react-router-dom";
-import { useState,useEffect } from "react";
-function AddOns({ selected, handleAddOns,clickOnline,clickProfile,clickStorage,newProfile,newOnline,newStorage }) {
+import { useState,useEffect,useContext } from "react";
+import AppContext from "../context/Context";
+function AddOns() {
+  const {selected, handleAddOns,clickOnline,clickProfile,clickStorage,newProfile,newOnline,newStorage} = useContext(AppContext)
   const [online, setOnline] = useState("");
   const [storage, setStorage] = useState("");
   const [profile, setProfile] = useState("");
