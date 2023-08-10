@@ -10,6 +10,7 @@ function Plans() {
   const navigate = useNavigate()
   const [isSelected, setSelected] = useState("month");
   const [plan, setPlan] = useState("arcade");
+  // eslint-disable-next-line no-unused-vars
   const [price, setPrice] = useState(9);
   const [message ,setMessage] = useState('')
   
